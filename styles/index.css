@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    justify-content: flex-start;
+}
+
+header {
+    font-size: xx-large;
+}
+
+#headerContainer {
+    background-color: aqua;
+}
+
+#temperatureContainer {
+    background-color: red;
+}
+
+#skyContainer {
+    background-color: cornflowerblue;
+}
+
+#cityNameContainer {
+    background-color: yellowgreen;
+}
+
+#weatherGardenContainer {
+    background-color: blueviolet;
+}

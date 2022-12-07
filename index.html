@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Report</title>
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/index.css" />
 </head>
 <body>
     <section id = "headerContainer">
         <header>Weather Report</header>
-            <p>For the lovely city of (cityname)</p>
+            <p id="userInput">For the lovely city of Seattle</p>
     </section>
     <section id = "temperatureContainer">
         <h1>Temperature</h1>
@@ -21,14 +21,21 @@
 
     </section>
     <section id = "skyContainer">
-        <h1>Weather Garden</h1>
-        <p>Emoji garden</p>
-        <select id= "skyDropdown"></select>
+        <h1>Sky</h1>
+        <select class="skyDropdown" name="sky">
+            <option value="">Select One</option>
+            <option value="sunny">Sunny</option>
+            <option value="cloudy">Cloudy</option>
+            <option value="rainy">Rainy</option>
+            <option value="snowy">Snowy</option>
+          </select>
+          <div class="result"></div>
     </section>
     <section id = "cityNameContainer">
         <h1>City Name</h1>
-        <form>??</form>
-        <button id= "Reset"></button>
+        <input placeholder="text" name="name" />
+        <p id="userInput"></p>
+        <button id= "Reset">Reset</button>
     </section>
     <section id = "weatherGardenContainer">
         <h1>Weather Garden</h1>
@@ -36,8 +43,8 @@
         <p id = "tempEmoticon">Emoticons for temp</p>
     </section>
     
-    <script src="src/index.js"></script>
-    <script src="node_modules/axios/dist/axios.min.js"></script>
+    <script src="./src/index.js"></script>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
 
 </body>
 </html>
