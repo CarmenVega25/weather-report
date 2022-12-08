@@ -91,19 +91,13 @@ selectElement.addEventListener('change', (event) => {
   }
 });
 
-// add api key
+// const axios = require('axios');
 
 const getCityLoc = () => {
   axios
-    .get(API, {
+    .get('http://127.0.0.1:5000/location', {
       params: {
-        key: apiKey,
         q: 'Seattle',
-        limit: 1,
-        format: 'json',
-      },
-      headers: {
-        'Accept-Encoding': 'application/json',
       },
     })
     .then((result) => {
