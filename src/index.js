@@ -34,9 +34,12 @@ const input = document.querySelector('input');
 const userInput = document.getElementById('userInput');
 
 input.addEventListener('change', updateValue);
+// location = updateValue(userInput);
 
 function updateValue(e) {
   userInput.textContent = `For the lovely city of ${e.target.value}`;
+  // const city = e.target.value;
+  // console.log(city);
 }
 
 const registerEventHandlers = (event) => {
@@ -94,6 +97,7 @@ selectElement.addEventListener('change', (event) => {
 // const axios = require('axios');
 
 const getCityLoc = () => {
+  // console.log(location);
   axios
     .get('http://127.0.0.1:5000/location', {
       params: {
@@ -101,9 +105,9 @@ const getCityLoc = () => {
       },
     })
     .then((result) => {
-      // console.log(result);
-      const lat = result.data[0].lat;
-      const lon = result.data[0].lon;
+      // console.log(result.data[0].lat);
+      let lat = result.data[0].lat;
+      let lon = result.data[0].lon;
       console.log(`Seattle lat: ${lat} lon: ${lon}`);
     })
 
@@ -112,4 +116,4 @@ const getCityLoc = () => {
     });
 };
 
-console.log(getCityLoc());
+console.log(getCityLoc('Seattle'));
