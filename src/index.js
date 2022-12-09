@@ -3,15 +3,24 @@ const state = {
   city: 'Seattle',
 };
 
+// Initial page load
+const pageInitialLoad = () => {
+  getCityLoc('Seattle');
+  cityNameField.value = 'Seattle';
+};
+
+// helper variables to create event listeners
 const cityNameField = document.getElementById('cityNameField');
 const cityNameDisplay = document.getElementById('cityNameDisplay');
 const temperatureContainer = document.getElementById('temperature');
 const addTempButton = document.getElementById('increaseTemp');
 const minusTempButton = document.getElementById('decreaseTemp');
-const resetButton = document.getElementById('Reset');
+const resetButton = document.getElementById('reset');
 const currentTemperatureButton = document.getElementById('currentTemp');
-const skyDropdown = document.querySelector('.skyDropdown');
+const skyDropdown = document.getElementById('skyDropdown');
+const emojiContainer = document.getElementById('emojiContainer');
 
+// functions to enable behavior in events
 const updateTemperature = (value) => {
   state.temperature = value;
   temperatureContainer.textContent = state.temperature;
@@ -26,30 +35,17 @@ const minusTemp = () => {
   updateTemperature(state.temperature - 1);
 };
 
-const resetCity = (event) => {
-  state.city = 'Seattle';
-  cityNameDisplay.textContent = 'Seattle';
-  getCityLoc('Seattle');
-  cityNameField.value = null;
+const updateConditions = (value) => {
+  if (skyDropdown.value === 'snowy') {
+    emojiContainer.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
+  } else if (skyDropdown.value === 'rainy') {
+    emojiContainer.textContent = `🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧`;
+  } else if (skyDropdown.value === 'cloudy') {
+    emojiContainer.textContent = `☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️`;
+  } else if (skyDropdown.value === 'sunny') {
+    emojiContainer.textContent = `☁️ ☁️ ☁️ ☀️ ☁️ ☁️`;
+  }
 };
-
-const updateCity = () => {
-  state.city = cityNameField.value;
-  cityNameDisplay.textContent = cityNameField.value;
-  getCityLoc(cityNameField.value);
-};
-
-addTempButton.addEventListener('click', addTemp);
-minusTempButton.addEventListener('click', minusTemp);
-resetButton.addEventListener('click', resetCity);
-cityNameField.addEventListener('change', updateCity);
-currentTemperatureButton.addEventListener('click', updateCity);
-
-const pageInitialLoad = (event) => {
-  getCityLoc('Seattle');
-};
-
-document.addEventListener('DOMContentLoaded', pageInitialLoad);
 
 const updateTempColor = (temperature) => {
   if (temperature > 80) {
@@ -75,21 +71,30 @@ const updateTempColor = (temperature) => {
   }
 };
 
-skyDropdown.addEventListener('change', (event) => {
-  const emojiContainer = document.querySelector('.emojiContainer');
-  if (event.target.value === 'snowy') {
-    emojiContainer.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
-  } else if (event.target.value === 'rainy') {
-    emojiContainer.textContent = `🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧`;
-  } else if (event.target.value === 'cloudy') {
-    emojiContainer.textContent = `☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️`;
-  } else if (event.target.value === 'sunny') {
-    emojiContainer.textContent = `☁️ ☁️ ☁️ ☀️ ☁️ ☁️`;
-  }
-});
+const resetCity = () => {
+  cityNameDisplay.textContent = 'Seattle';
+  getCityLoc('Seattle');
+  cityNameField.value = 'Seattle';
+};
 
+const updateCity = () => {
+  state.city = cityNameField.value;
+  cityNameDisplay.textContent = cityNameField.value;
+  getCityLoc(cityNameField.value);
+};
+
+// event listeners
+addTempButton.addEventListener('click', addTemp);
+minusTempButton.addEventListener('click', minusTemp);
+resetButton.addEventListener('click', resetCity);
+cityNameField.addEventListener('change', updateCity);
+currentTemperatureButton.addEventListener('click', updateCity);
+skyDropdown.addEventListener('change', updateConditions);
+
+document.addEventListener('DOMContentLoaded', pageInitialLoad);
+
+// API calls
 const getCityLoc = (cityName) => {
-  // console.log(location);
   axios
     .get('http://127.0.0.1:5000/location', {
       params: {
@@ -97,10 +102,8 @@ const getCityLoc = (cityName) => {
       },
     })
     .then((result) => {
-      // console.log(result.data[0].lat);
       let lat = result.data[0].lat;
       let lon = result.data[0].lon;
-      console.log(`Seattle lat: ${lat} lon: ${lon}`);
       getCityTemp(lat, lon);
     })
 
@@ -118,20 +121,16 @@ const getCityTemp = (lat, lon) => {
       },
     })
     .then((result) => {
-      // console.log(result);
       let temp = result.data.main.temp;
       let temperatureFahrenheit = convertKelvinToFahrenheit(temp);
-      console.log(temp);
-      console.log(temperatureFahrenheit);
       updateTemperature(temperatureFahrenheit);
-      // console.log(temp);
-      console.log('blahåå');
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
+// helper function to convert temperature
 const convertKelvinToFahrenheit = (tempKelvin) => {
   return Math.round(((tempKelvin - 273.15) * 9) / 5 + 32);
 };
