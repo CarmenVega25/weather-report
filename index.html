@@ -7,45 +7,44 @@
     <title>Weather Report</title>
     <link rel="stylesheet" href="styles/index.css" />
 </head>
-<body>
-    <section id = "headerContainer">
-        <header>Weather Report</header>
-            <p id="userInput">For the lovely city of Seattle</p>
-    </section>
-    <section id = "temperatureContainer">
-        <h1>Temperature</h1>
-        <button id = "increaseTemp">Increase Temperature</button>
-        <div id="totalCount">Temp Count: 0</div>
-        <button id = "decreaseTemp">Decrease Temperature</button>
-        <button id = "currentTemp">Current Temperature</button>
+    <body>
+        <section id = "headerContainer">
+            <header>Weather Report</header>
+            <p>For the lovely city of <span id="cityNameDisplay">Seattle</span></p>
+        </section>
+        <section id = "temperatureContainer">
+            <h1>Temperature</h1>
+            <button id="increaseTemp">Increase Temperature</button>
+            <div id="temperature">Loading</div>
+            <button id="decreaseTemp">Decrease Temperature</button>
+            <button id="currentTemp">Current Temperature</button>
 
-    </section>
-    <section id = "skyContainer">
-        <h1>Sky</h1>
-        <select class="skyDropdown" name="sky">
-            <option value="">Select One</option>
-            <option value="sunny">Sunny</option>
-            <option value="cloudy">Cloudy</option>
-            <option value="rainy">Rainy</option>
-            <option value="snowy">Snowy</option>
-          </select>
-          <div class="result"></div>
-    </section>
-    <section id = "cityNameContainer">
-        <h1>City Name</h1>
-        <input placeholder="text" name="name" />
-        <p id="userInput"></p>
-        <button id= "Reset">Reset</button>
-    </section>
-    <section id = "weatherGardenContainer">
-        <h1>Weather Garden</h1>
-        <p>Emoticons for sky</p>
-        <p id = "tempEmoticon">Emoticons for temp</p>
-    </section>
-    
-    <script src="./node_modules/axios/dist/axios.min.js"></script>
-    <script src="./src/index.js"></script>
-    
+        </section>
+        <section id = "skyContainer">
+            <h1>Sky</h1>
+            <select id="skyDropdown" name="sky">
+                <option value="">Select One</option>
+                <option value="sunny">Sunny</option>
+                <option value="cloudy">Cloudy</option>
+                <option value="rainy">Rainy</option>
+                <option value="snowy">Snowy</option>
+            </select>
+            <div id="emojiContainer"></div>
+        </section>
+        <section id = "cityNameContainer">
+            <h1>City Name</h1>
+            <input id="cityNameField"/>
+            <button id= "reset">Reset</button>
+        </section>
+        <section id = "weatherGardenContainer">
+            <h1>Weather Garden</h1>
+            <!-- <p>Emoticons for sky</p> -->
+            <p id = "tempEmoticon">Emoticons for temp</p>
+        </section>
+        
+        <script src="./node_modules/axios/dist/axios.min.js"></script>
+        <script src="./src/index.js"></script>
+        
 
-</body>
+    </body>
 </html>

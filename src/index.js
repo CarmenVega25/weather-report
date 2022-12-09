@@ -1,114 +1,110 @@
 const state = {
-  totalCount: 0,
+  temperature: 0,
+  city: 'Seattle',
 };
 
-const addTemp = (event) => {
-  const newAddition = document.createElement('span');
-  const temperatureContainer = document.querySelector('#temperatureContainer');
-  temperatureContainer.appendChild(newAddition);
-  state.totalCount += 1;
-  const tempCountCounter = document.querySelector('#totalCount');
-  tempCountCounter.textContent = `Temp Count: ${state.totalCount}`;
-  updateTempColor(state.totalCount);
+// Initial page load
+const pageInitialLoad = () => {
+  getCityLoc('Seattle');
+  cityNameField.value = 'Seattle';
 };
 
-const minusTemp = (event) => {
-  const newSubtraction = document.createElement('span');
-  const temperatureContainer = document.querySelector('#temperatureContainer');
-  temperatureContainer.appendChild(newSubtraction);
-  state.totalCount -= 1;
-  const tempCountCounter = document.querySelector('#totalCount');
-  tempCountCounter.textContent = `Temp Count: ${state.totalCount}`;
-  updateTempColor(state.totalCount);
+// helper variables to create event listeners
+const cityNameField = document.getElementById('cityNameField');
+const cityNameDisplay = document.getElementById('cityNameDisplay');
+const temperatureContainer = document.getElementById('temperature');
+const addTempButton = document.getElementById('increaseTemp');
+const minusTempButton = document.getElementById('decreaseTemp');
+const resetButton = document.getElementById('reset');
+const currentTemperatureButton = document.getElementById('currentTemp');
+const skyDropdown = document.getElementById('skyDropdown');
+const emojiContainer = document.getElementById('emojiContainer');
+
+// functions to enable behavior in events
+const updateTemperature = (value) => {
+  state.temperature = value;
+  temperatureContainer.textContent = state.temperature;
+  updateTempColor(state.temperature);
 };
 
-const resetCity = (event) => {
-  const reset = document.createElement('span');
-  const cityNameContainer = document.querySelector('#cityNameContainer');
-  cityNameContainer.appendChild(reset);
-  const resetButton = document.querySelector('#Reset');
-  userInput.textContent = `For the lovely city of Seattle`;
+const addTemp = () => {
+  updateTemperature(state.temperature + 1);
 };
 
-const input = document.querySelector('input');
-const userInput = document.getElementById('userInput');
-
-input.addEventListener('change', updateValue);
-// location = updateValue(userInput);
-
-function updateValue(e) {
-  userInput.textContent = `For the lovely city of ${e.target.value}`;
-  // const city = e.target.value;
-  // console.log(city);
-}
-
-const registerEventHandlers = (event) => {
-  console.log('in registerEventHandlers:', event);
-  const addTempButton = document.querySelector('#increaseTemp');
-  const minusTempButton = document.querySelector('#decreaseTemp');
-  addTempButton.addEventListener('click', addTemp);
-  minusTempButton.addEventListener('click', minusTemp);
-  const userInput = document.querySelector('#userInput');
-  const resetButton = document.querySelector('#Reset');
-  resetButton.addEventListener('click', resetCity);
+const minusTemp = () => {
+  updateTemperature(state.temperature - 1);
 };
 
-document.addEventListener('DOMContentLoaded', registerEventHandlers);
+const updateConditions = (value) => {
+  if (skyDropdown.value === 'snowy') {
+    emojiContainer.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
+  } else if (skyDropdown.value === 'rainy') {
+    emojiContainer.textContent = `🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧`;
+  } else if (skyDropdown.value === 'cloudy') {
+    emojiContainer.textContent = `☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️`;
+  } else if (skyDropdown.value === 'sunny') {
+    emojiContainer.textContent = `☁️ ☁️ ☁️ ☀️ ☁️ ☁️`;
+  }
+};
 
-const updateTempColor = (totalCount) => {
-  if (totalCount > 80) {
-    document.getElementById('totalCount').style.color = 'red';
+const updateTempColor = (temperature) => {
+  if (temperature > 80) {
+    document.getElementById('temperature').style.color = 'red';
     document.getElementById('tempEmoticon').textContent =
       '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
-  } else if (totalCount >= 70 && totalCount <= 79) {
-    document.getElementById('totalCount').style.color = 'orange';
+  } else if (temperature >= 70 && temperature <= 79) {
+    document.getElementById('temperature').style.color = 'orange';
     document.getElementById('tempEmoticon').textContent =
       '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
-  } else if (totalCount >= 60 && totalCount <= 69) {
-    document.getElementById('totalCount').style.color = 'yellow';
+  } else if (temperature >= 60 && temperature <= 69) {
+    document.getElementById('temperature').style.color = 'yellow';
     document.getElementById('tempEmoticon').textContent =
       '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
-  } else if (totalCount >= 50 && totalCount <= 59) {
-    document.getElementById('totalCount').style.color = 'green';
+  } else if (temperature >= 50 && temperature <= 59) {
+    document.getElementById('temperature').style.color = 'green';
     document.getElementById('tempEmoticon').textContent =
       '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
-  } else if (totalCount <= 49) {
-    document.getElementById('totalCount').style.color = 'teal';
+  } else if (temperature <= 49) {
+    document.getElementById('temperature').style.color = 'teal';
     document.getElementById('tempEmoticon').textContent =
       '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
   }
 };
 
-const selectElement = document.querySelector('.skyDropdown');
+const resetCity = () => {
+  cityNameDisplay.textContent = 'Seattle';
+  getCityLoc('Seattle');
+  cityNameField.value = 'Seattle';
+};
 
-selectElement.addEventListener('change', (event) => {
-  const result = document.querySelector('.result');
-  if (event.target.value === 'snowy') {
-    result.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
-  } else if (event.target.value === 'rainy') {
-    result.textContent = `🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧`;
-  } else if (event.target.value === 'cloudy') {
-    result.textContent = `☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️`;
-  } else if (event.target.value === 'sunny') {
-    result.textContent = `☁️ ☁️ ☁️ ☀️ ☁️ ☁️`;
-  }
-});
+const updateCity = () => {
+  state.city = cityNameField.value;
+  cityNameDisplay.textContent = cityNameField.value;
+  getCityLoc(cityNameField.value);
+};
 
-// const axios = require('axios');
+// event listeners
+addTempButton.addEventListener('click', addTemp);
+minusTempButton.addEventListener('click', minusTemp);
+resetButton.addEventListener('click', resetCity);
+cityNameField.addEventListener('change', updateCity);
+currentTemperatureButton.addEventListener('click', updateCity);
+skyDropdown.addEventListener('change', updateConditions);
 
-const getCityLoc = () => {
-  // console.log(location);
+document.addEventListener('DOMContentLoaded', pageInitialLoad);
+
+// API calls
+const getCityLoc = (cityName) => {
   axios
     .get('http://127.0.0.1:5000/location', {
       params: {
-        q: 'Seattle',
+        q: cityName,
       },
     })
     .then((result) => {
-      // console.log(result.data[0].lat);
       let lat = result.data[0].lat;
       let lon = result.data[0].lon;
-      console.log(`Seattle lat: ${lat} lon: ${lon}`);
+      getCityTemp(lat, lon);
     })
 
     .catch((error) => {
@@ -116,4 +112,25 @@ const getCityLoc = () => {
     });
 };
 
-console.log(getCityLoc('Seattle'));
+const getCityTemp = (lat, lon) => {
+  axios
+    .get('http://127.0.0.1:5000/weather', {
+      params: {
+        lat: lat,
+        lon: lon,
+      },
+    })
+    .then((result) => {
+      let temp = result.data.main.temp;
+      let temperatureFahrenheit = convertKelvinToFahrenheit(temp);
+      updateTemperature(temperatureFahrenheit);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+// helper function to convert temperature
+const convertKelvinToFahrenheit = (tempKelvin) => {
+  return Math.round(((tempKelvin - 273.15) * 9) / 5 + 32);
+};
