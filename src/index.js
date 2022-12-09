@@ -10,6 +10,7 @@ const addTempButton = document.getElementById('increaseTemp');
 const minusTempButton = document.getElementById('decreaseTemp');
 const resetButton = document.getElementById('Reset');
 const currentTemperatureButton = document.getElementById('currentTemp');
+const skyDropdown = document.querySelector('.skyDropdown');
 
 const updateTemperature = (value) => {
   state.temperature = value;
@@ -74,9 +75,7 @@ const updateTempColor = (temperature) => {
   }
 };
 
-const selectElement = document.querySelector('.skyDropdown');
-
-selectElement.addEventListener('change', (event) => {
+skyDropdown.addEventListener('change', (event) => {
   const emojiContainer = document.querySelector('.emojiContainer');
   if (event.target.value === 'snowy') {
     emojiContainer.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
