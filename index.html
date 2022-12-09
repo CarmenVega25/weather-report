@@ -10,14 +10,14 @@
 <body>
     <section id = "headerContainer">
         <header>Weather Report</header>
-            <p id="userInput">For the lovely city of Seattle</p>
+        <p>For the lovely city of <span id="cityNameDisplay">Seattle</span></p>
     </section>
     <section id = "temperatureContainer">
         <h1>Temperature</h1>
-        <button id = "increaseTemp">Increase Temperature</button>
-        <div id="totalCount">Temp Count: 0</div>
-        <button id = "decreaseTemp">Decrease Temperature</button>
-        <button id = "currentTemp">Current Temperature</button>
+        <button id="increaseTemp">Increase Temperature</button>
+        <div id="temperature">Loading</div>
+        <button id="decreaseTemp">Decrease Temperature</button>
+        <button id="currentTemp">Current Temperature</button>
 
     </section>
     <section id = "skyContainer">
@@ -28,13 +28,12 @@
             <option value="cloudy">Cloudy</option>
             <option value="rainy">Rainy</option>
             <option value="snowy">Snowy</option>
-          </select>
-          <div class="result"></div>
+        </select>
+        <div class="emojiContainer"></div>
     </section>
     <section id = "cityNameContainer">
         <h1>City Name</h1>
-        <input placeholder="text" name="name" />
-        <p id="userInput"></p>
+        <input id="cityNameField"/>
         <button id= "Reset">Reset</button>
     </section>
     <section id = "weatherGardenContainer">

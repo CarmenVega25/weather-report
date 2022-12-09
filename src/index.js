@@ -1,79 +1,74 @@
 const state = {
-  totalCount: 0,
+  temperature: 0,
+  city: 'Seattle',
 };
 
-const addTemp = (event) => {
-  const newAddition = document.createElement('span');
-  const temperatureContainer = document.querySelector('#temperatureContainer');
-  temperatureContainer.appendChild(newAddition);
-  state.totalCount += 1;
-  const tempCountCounter = document.querySelector('#totalCount');
-  tempCountCounter.textContent = `Temp Count: ${state.totalCount}`;
-  updateTempColor(state.totalCount);
+const cityNameField = document.getElementById('cityNameField');
+const cityNameDisplay = document.getElementById('cityNameDisplay');
+const temperatureContainer = document.getElementById('temperature');
+const addTempButton = document.getElementById('increaseTemp');
+const minusTempButton = document.getElementById('decreaseTemp');
+const resetButton = document.getElementById('Reset');
+const currentTemperatureButton = document.getElementById('currentTemp');
+
+const updateTemperature = (value) => {
+  state.temperature = value;
+  temperatureContainer.textContent = state.temperature;
+  updateTempColor(state.temperature);
 };
 
-const minusTemp = (event) => {
-  const newSubtraction = document.createElement('span');
-  const temperatureContainer = document.querySelector('#temperatureContainer');
-  temperatureContainer.appendChild(newSubtraction);
-  state.totalCount -= 1;
-  const tempCountCounter = document.querySelector('#totalCount');
-  tempCountCounter.textContent = `Temp Count: ${state.totalCount}`;
-  updateTempColor(state.totalCount);
+const addTemp = () => {
+  updateTemperature(state.temperature + 1);
+};
+
+const minusTemp = () => {
+  updateTemperature(state.temperature - 1);
 };
 
 const resetCity = (event) => {
-  const reset = document.createElement('span');
-  const cityNameContainer = document.querySelector('#cityNameContainer');
-  cityNameContainer.appendChild(reset);
-  const resetButton = document.querySelector('#Reset');
-  userInput.textContent = `For the lovely city of Seattle`;
+  state.city = 'Seattle';
+  cityNameDisplay.textContent = 'Seattle';
+  getCityLoc('Seattle');
+  cityNameField.value = null;
 };
 
-const input = document.querySelector('input');
-const userInput = document.getElementById('userInput');
-
-input.addEventListener('change', updateValue);
-// location = updateValue(userInput);
-
-function updateValue(e) {
-  userInput.textContent = `For the lovely city of ${e.target.value}`;
-  // const city = e.target.value;
-  // console.log(city);
-}
-
-const registerEventHandlers = (event) => {
-  console.log('in registerEventHandlers:', event);
-  const addTempButton = document.querySelector('#increaseTemp');
-  const minusTempButton = document.querySelector('#decreaseTemp');
-  addTempButton.addEventListener('click', addTemp);
-  minusTempButton.addEventListener('click', minusTemp);
-  const userInput = document.querySelector('#userInput');
-  const resetButton = document.querySelector('#Reset');
-  resetButton.addEventListener('click', resetCity);
+const updateCity = () => {
+  state.city = cityNameField.value;
+  cityNameDisplay.textContent = cityNameField.value;
+  getCityLoc(cityNameField.value);
 };
 
-document.addEventListener('DOMContentLoaded', registerEventHandlers);
+addTempButton.addEventListener('click', addTemp);
+minusTempButton.addEventListener('click', minusTemp);
+resetButton.addEventListener('click', resetCity);
+cityNameField.addEventListener('change', updateCity);
+currentTemperatureButton.addEventListener('click', updateCity);
 
-const updateTempColor = (totalCount) => {
-  if (totalCount > 80) {
-    document.getElementById('totalCount').style.color = 'red';
+const pageInitialLoad = (event) => {
+  getCityLoc('Seattle');
+};
+
+document.addEventListener('DOMContentLoaded', pageInitialLoad);
+
+const updateTempColor = (temperature) => {
+  if (temperature > 80) {
+    document.getElementById('temperature').style.color = 'red';
     document.getElementById('tempEmoticon').textContent =
       '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
-  } else if (totalCount >= 70 && totalCount <= 79) {
-    document.getElementById('totalCount').style.color = 'orange';
+  } else if (temperature >= 70 && temperature <= 79) {
+    document.getElementById('temperature').style.color = 'orange';
     document.getElementById('tempEmoticon').textContent =
       '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
-  } else if (totalCount >= 60 && totalCount <= 69) {
-    document.getElementById('totalCount').style.color = 'yellow';
+  } else if (temperature >= 60 && temperature <= 69) {
+    document.getElementById('temperature').style.color = 'yellow';
     document.getElementById('tempEmoticon').textContent =
       '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
-  } else if (totalCount >= 50 && totalCount <= 59) {
-    document.getElementById('totalCount').style.color = 'green';
+  } else if (temperature >= 50 && temperature <= 59) {
+    document.getElementById('temperature').style.color = 'green';
     document.getElementById('tempEmoticon').textContent =
       '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
-  } else if (totalCount <= 49) {
-    document.getElementById('totalCount').style.color = 'teal';
+  } else if (temperature <= 49) {
+    document.getElementById('temperature').style.color = 'teal';
     document.getElementById('tempEmoticon').textContent =
       '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
   }
@@ -82,26 +77,24 @@ const updateTempColor = (totalCount) => {
 const selectElement = document.querySelector('.skyDropdown');
 
 selectElement.addEventListener('change', (event) => {
-  const result = document.querySelector('.result');
+  const emojiContainer = document.querySelector('.emojiContainer');
   if (event.target.value === 'snowy') {
-    result.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
+    emojiContainer.textContent = `🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨`;
   } else if (event.target.value === 'rainy') {
-    result.textContent = `🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧`;
+    emojiContainer.textContent = `🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧`;
   } else if (event.target.value === 'cloudy') {
-    result.textContent = `☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️`;
+    emojiContainer.textContent = `☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️`;
   } else if (event.target.value === 'sunny') {
-    result.textContent = `☁️ ☁️ ☁️ ☀️ ☁️ ☁️`;
+    emojiContainer.textContent = `☁️ ☁️ ☁️ ☀️ ☁️ ☁️`;
   }
 });
 
-// const axios = require('axios');
-
-const getCityLoc = () => {
+const getCityLoc = (cityName) => {
   // console.log(location);
   axios
     .get('http://127.0.0.1:5000/location', {
       params: {
-        q: 'Seattle',
+        q: cityName,
       },
     })
     .then((result) => {
@@ -109,6 +102,7 @@ const getCityLoc = () => {
       let lat = result.data[0].lat;
       let lon = result.data[0].lon;
       console.log(`Seattle lat: ${lat} lon: ${lon}`);
+      getCityTemp(lat, lon);
     })
 
     .catch((error) => {
@@ -116,4 +110,29 @@ const getCityLoc = () => {
     });
 };
 
-console.log(getCityLoc('Seattle'));
+const getCityTemp = (lat, lon) => {
+  axios
+    .get('http://127.0.0.1:5000/weather', {
+      params: {
+        lat: lat,
+        lon: lon,
+      },
+    })
+    .then((result) => {
+      // console.log(result);
+      let temp = result.data.main.temp;
+      let temperatureFahrenheit = convertKelvinToFahrenheit(temp);
+      console.log(temp);
+      console.log(temperatureFahrenheit);
+      updateTemperature(temperatureFahrenheit);
+      // console.log(temp);
+      console.log('blahåå');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const convertKelvinToFahrenheit = (tempKelvin) => {
+  return Math.round(((tempKelvin - 273.15) * 9) / 5 + 32);
+};
