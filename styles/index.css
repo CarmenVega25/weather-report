@@ -1,18 +1,39 @@
 body {
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    margin: auto;
+    width: 100%;
+    grid-template: 200px, 300px, auto;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 header {
     font-size: xx-large;
+    color: darkblue;
+    font-weight: 800;
+}
+
+
+
+h1 {
+    color:darkgreen;
+    text-decoration: underline;
 }
 
 #headerContainer {
+    /* grid-row: 1; */
+    display: flex;
+    justify-content: flex-start;
     background-color: aqua;
+    padding: 50px;
+    
+}
+
+#headerContainer p {
+    padding-left: 20px;
 }
 
 #temperatureContainer {
-    background-color: white;
+    background-color:lavender;
 }
 
 #skyContainer {
@@ -25,4 +46,38 @@ header {
 
 #weatherGardenContainer {
     background-color: blueviolet;
+}
+
+#increaseTemp {
+    background-color:crimson ;
+    color:darkred;
+}
+
+#decreaseTemp {
+    background-color:dodgerblue;
+    color:midnightblue;
+}
+
+#currentTemp {
+    background-color: blanchedalmond;
+    color:darkgoldenrod;
+}
+
+#cityNameDisplay {
+    color:blueviolet;
+    text-  ;
+}
+
+p {
+    color:darkolivegreen;
+}
+
+.leftContainer {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+#weatherGardenContainer {
+    grid-row: 2;
 }
