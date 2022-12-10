@@ -38,9 +38,52 @@ input.addEventListener('change', updateValue);
 
 function updateValue(e) {
   userInput.textContent = `For the lovely city of ${e.target.value}`;
+  const promise = axios.get('http://127.0.0.1:5000/location', {
+    params: {
+      q: e.target.value,
+    },
+  });
+  const dataPromise = promise.then((response) => {
+    // console.log(result.data[0].lat);
+    console.log(response.data[0]);
+    response.data[0];
+    // let lat = result.data[0].lat;
+    // let lon = result.data[0].lon;
+    // console.log(`${e.target.value} lat: ${lat} lon: ${lon}`);
+  });
+  return dataPromise.catch((error) => {
+    console.log(error);
+  });
   // const city = e.target.value;
   // console.log(city);
 }
+const currentTemp = (event) => {
+  const currentTemperature = document.createElement('span');
+  const temperatureCurrentContainer = document.querySelector(
+    '#temperatureContainer'
+  );
+  temperatureCurrentContainer.appendChild(currentTemperature);
+  axios
+    .updateValue()
+    .get('http://127.0.0.1:5000/weather', {
+      params: {
+        lat: response.lat,
+        lon: response.lon,
+      },
+    })
+    .then((result) => {
+      console.log(result);
+      let math = ((result[main][temp] - 273.15) * 9) / 5 + 32;
+      state.totalCount = math;
+      console.log(math);
+    })
+
+    .catch((error) => {
+      console.log(error);
+    });
+  // const city = e.target.value;
+  // console.log(city);
+};
 
 const registerEventHandlers = (event) => {
   console.log('in registerEventHandlers:', event);
@@ -96,24 +139,24 @@ selectElement.addEventListener('change', (event) => {
 
 // const axios = require('axios');
 
-const getCityLoc = () => {
-  // console.log(location);
-  axios
-    .get('http://127.0.0.1:5000/location', {
-      params: {
-        q: 'Seattle',
-      },
-    })
-    .then((result) => {
-      // console.log(result.data[0].lat);
-      let lat = result.data[0].lat;
-      let lon = result.data[0].lon;
-      console.log(`Seattle lat: ${lat} lon: ${lon}`);
-    })
+// const getCityLoc = () => {
+//   // console.log(location);
+//   axios
+//     .get('http://127.0.0.1:5000/location', {
+//       params: {
+//         q: 'Seattle',
+//       },
+//     })
+//     .then((result) => {
+//       // console.log(result.data[0].lat);
+//       let lat = result.data[0].lat;
+//       let lon = result.data[0].lon;
+//       console.log(`Seattle lat: ${lat} lon: ${lon}`);
+//     })
 
-    .catch((error) => {
-      console.log(error);
-    });
-};
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
-console.log(getCityLoc('Seattle'));
+// console.log(getCityLoc('Seattle'));
