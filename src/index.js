@@ -23,7 +23,7 @@ const emojiContainer = document.getElementById('emojiContainer');
 // functions to enable behavior in events
 const updateTemperature = (value) => {
   state.temperature = value;
-  temperatureContainer.textContent = state.temperature;
+  temperatureContainer.textContent = `${state.temperature}℉`;
   updateTempColor(state.temperature);
 };
 
